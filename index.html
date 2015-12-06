@@ -33,27 +33,35 @@
 					
 			$("#btnSubmit").click(function(){
 				view.clearHazardColorBlob();
-				var row, col, hazard = [], colorblob = [];
+				var row, col, xPos, yPos, hazard = [], colorblob = [];
 				$("#canvas1").clearCanvas();
 
 				row = $("#row").val();
 				col = $("#col").val();
+				xPos = $("#xPos").val();
+				yPos = $("#yPos").val();
+
 				map.drawBoard(row,col);
 				hazard = map.createHazard();
 				colorblob = map.createColorBlob();
-				map.createSIM();
+				SIM.SIMInit(xPos, yPos);
+				map.createSIM(xPos, yPos);
 
+
+				
 				map.makeMapContent(hazard, colorblob);
 				
 				var graph = new Graph(map.mapContent);
-				var start = graph.grid[0][0];
+				var start = graph.grid[xPos][yPos];
 
 				var end = graph.grid[colorblob[0][0]][colorblob[0][1]];
 				var result = astar.search(graph, start, end);
+				alert(result);
 
 
 				for(var i = 0 ; i < result.length; i++){
 					var before;
+
 					var present;
 
 					if(i ==0){
@@ -65,13 +73,13 @@
 						present = result[i];
 					}
 
-					if((before.y < present.y) && (before.x == present.x)){
+					if((before.y < present.y) && (before.x == present.x)){				
 						SIM.moveToDown();
-					}else if((before.y < present.y) && (before.x == present.x)){
+					}else if((before.y < present.y) && (before.x == present.x)){						
 						SIM.moveToUp();
-					}else if((before.y == present.y) && (before.x > present.x)){
+					}else if((before.y == present.y) && (before.x > present.x)){						
 						SIM.moveToLeft();
-					}else if((before.y == present.y) && (before.x < present.x)){
+					}else if((before.y == present.y) && (before.x < present.x)){						
 						SIM.moveToRight();
 					}else{
 
@@ -128,6 +136,11 @@
 			<p>맵 크기</p>
 			행 : <input type = "number" value = "1" id = "row" name = "row" min = "1" max = "9"><br>
 			열 : <input type = "number" value = "1" id = "col" name = "col" min = "1" max = "9"><br>
+			<p>로봇 추가</p>
+
+			X : <input type = "number" value = "1" id = "xPos" name = "xPos" min = "1" max = "9"><br>
+			Y : <input type = "number" value = "1" id = "yPos" name = "yPos" min = "1" max = "9"><br>
+
 			<p>Hazard <img src = "images/insertButton.png" class = "hazardInsert" width = "10" height = "10"></p>
 			<div class = "hazardInsertList">
 				좌표  : <input type = "text" name = "hazard1" class = "hazard"><br>

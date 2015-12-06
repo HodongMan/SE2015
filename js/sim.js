@@ -1,8 +1,13 @@
 
 var SIM = {
 
-	current_top:185,
-	current_left:145,
+	current_top:0,
+	current_left:0,
+
+	SIMInit:function(xPos, yPos){
+		this.current_top = 185 + xPos * 100;
+		this.current_left = 145 + yPos * 100;
+	},
 
 	moveToUp:function(){
 		//$("#SIM").css("background", "url('images/RobotUp.jpg') no-repeat");

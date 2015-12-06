@@ -1,6 +1,7 @@
 
 var map = {
 
+	SIMPosition : [],
 	mapContent : [],
 	hazardContent : [],
 	colorBlobContent : [],
@@ -60,7 +61,7 @@ var map = {
 
 		this.hazardContent = hazardList;
 		this.colorBlobContent = colorBlobList;
-		
+
 		
 		for(var i = 0; i < this.mapCol; i++){
 			this.mapContent[i] = new Array(this.mapCol);
@@ -111,8 +112,11 @@ var map = {
 
 	},
 
-	createSIM:function(){
-		var SIMObject = '<div id = "SIM"></div>'
+	createSIM:function(xPos, yPos){
+		var x = 145 + xPos * 100;
+		var y = 185 + yPos * 100;
+		var SIMObject = '<div id = "SIM" style = "top:'+y+'px; left:'+x+'px;"></div>';
+		this.SIMPosition[0] = x; this.SIMPosition[1] = y; 
 		$("body").append(SIMObject);
 	},
 
