@@ -5,8 +5,8 @@ var SIM = {
 	current_left:0,
 
 	SIMInit:function(xPos, yPos){
-		this.current_top = 185 + xPos * 100;
-		this.current_left = 145 + yPos * 100;
+		this.current_top = 185 + yPos * 100;
+		this.current_left = 145 + xPos * 100;
 	},
 
 	moveToUp:function(){
