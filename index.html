@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset = "utf-8">
+	<title>ADD_ON System</title>
+
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script type="text/javascript" src = "js/jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src = "js/jcanvas.min.js"></script>
+	<script type="text/javascript" src = "js/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src = "js/sim.js"></script>
+	<script type="text/javascript" src = "js/map.js"></script>
+	<script type="text/javascript" src = "js/view.js"></script>
+	<script type="text/javascript" src = "js/astar.js"></script>
+	<script type="text/javascript">
+
+
+
+		$(document).ready(function() {
+			map.drawBoard(5, 5);
+			map.makeFormBoard();
+			view.clearHazardColorBlob();
+			view.makeHazardInsert();
+			view.makeColorBlobInsert();
+
+			function Test(){
+
+			}
+
+			Test.prototype = SIM;
+
+		//	SIM.moveToDown();
+					
+			$("#btnSubmit").click(function(){
+				view.clearHazardColorBlob();
+				var row, col, hazard = [], colorblob = [];
+				$("#canvas1").clearCanvas();
+
+				row = $("#row").val();
+				col = $("#col").val();
+				map.drawBoard(row,col);
+				hazard = map.createHazard();
+				colorblob = map.createColorBlob();
+				map.createSIM();
+
+				map.makeMapContent(hazard, colorblob);
+				
+				var graph = new Graph(map.mapContent);
+				var start = graph.grid[0][0];
+
+				var end = graph.grid[colorblob[0][0]][colorblob[0][1]];
+				var result = astar.search(graph, start, end);
+
+
+				for(var i = 0 ; i < result.length; i++){
+					var before;
+					var present;
+
+					if(i ==0){
+						before = start;
+						present = result[i];
+					}
+					else{
+						before = result[i-1];
+						present = result[i];
+					}
+
+					if((before.y < present.y) && (before.x == present.x)){
+						SIM.moveToDown();
+					}else if((before.y < present.y) && (before.x == present.x)){
+						SIM.moveToUp();
+					}else if((before.y == present.y) && (before.x > present.x)){
+						SIM.moveToLeft();
+					}else if((before.y == present.y) && (before.x < present.x)){
+						SIM.moveToRight();
+					}else{
+
+					}
+						
+					
+				}
+								
+
+				return false;
+			});
+
+		});
+
+
+
+	</script>
+</head>
+<body>
+
+  <div id="main">
+    <div id="header">
+	  <div id="banner">
+	    <div id="welcome">
+	      <h1>2015 Software Engineering</h1>
+	    </div><!--close welcome-->
+	    <div id="welcome_slogan">
+	      <h1>작업중입니다.</h1>
+	    </div><!--close welcome_slogan-->
+	  </div><!--close banner-->
+    </div><!--close header-->
+
+	<div id="menubar">
+      <ul id="menu">
+        <li class="current"><a href="#">실행화면</a></li>
+
+      </ul>
+    </div><!--close menubar-->	
+    
+	<div id="site_content">		
+
+		<canvas id="canvas1" width="1024" height="768"></canvas>
+          </div>
+  
+  </div><!--close main-->
+  
+  <div id="footer">
+	  <a href="#">20119200xx 박윤하</a> | <a href="#">20119200xx 예준형</a> | <a href="#">2011920049 장호동</a> | <a href="#">위 프로그램의 저작권은 3명에게 있습니다.</a>
+  </div><!--close footer-->  
+
+	
+	<div id = "formBoard">
+		<form>
+			<p>맵 크기</p>
+			행 : <input type = "number" value = "1" id = "row" name = "row" min = "1" max = "9"><br>
+			열 : <input type = "number" value = "1" id = "col" name = "col" min = "1" max = "9"><br>
+			<p>Hazard <img src = "images/insertButton.png" class = "hazardInsert" width = "10" height = "10"></p>
+			<div class = "hazardInsertList">
+				좌표  : <input type = "text" name = "hazard1" class = "hazard"><br>
+			</div>
+			<p>ColorBlob <img src = "images/insertButton.png" class = "colorBlobInsert" width = "10" height = "10"></p>
+			<div class = "colorBlobInsertList">
+				좌표  : <input type = "text" name = "colorblob1" class = "colorblob"><br>
+			</div>
+			<p><input type = "submit" id = "btnSubmit" value = "입력"></p>
+		</form>
+	</div>
+</body>
+</html>
