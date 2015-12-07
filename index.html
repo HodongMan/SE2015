@@ -17,40 +17,61 @@
 
 
 		$(document).ready(function() {
-			map.drawBoard(5, 5);
-			map.makeFormBoard();
-			view.clearHazardColorBlob();
-			view.makeHazardInsert();
-			view.makeColorBlobInsert();
+			var View = view;
+			var Map = map;
+			Map.drawBoard(5, 5);
+			Map.makeFormBoard();
+			View.clearHazardColorBlob();
+			View.makeHazardInsert();
+			View.makeColorBlobInsert();
 
 
 					
 			$("#btnSubmit").click(function(){
-				view.clearHazardColorBlob();
-				var row, col, xPos, yPos, hazard = [], colorblob = [];
+				var row, col, xPos, yPos, xFinish, yFinish, hazard = [], colorblob = [];
+				
+
+				View.clearHazardColorBlob();
 				$("#canvas1").clearCanvas();
+				// 맵과 각종 오브젝트를 지운다.
 
 				row = $("#row").val();
 				col = $("#col").val();
+
 				xPos = $("#xPos").val();
 				yPos = $("#yPos").val();
 
-				map.drawBoard(row,col);
+				xFinish = $("#finishX").val();
+				yFinish = $("#finishY").val();
+
+				//Form에서 값을 가져온다.
+
+				Map.drawBoard(row,col);
+
+				//Board 그리기
+
 				hazard = map.createHazard();
 				colorblob = map.createColorBlob();
+				Map.createFinish(xFinish, yFinish);
 				SIM.SIMInit(xPos, yPos);
-				map.createSIM(xPos, yPos);
-
+				Map.createSIM(xPos, yPos);
+				
+				//오브젝트 그리기
 
 				
-				map.makeMapContent(hazard, colorblob);
+				Map.makeMapContent();
+				//맵 정보 등록하기
+
 				
 				var graph = new Graph(map.mapContent);
+				
 				var start = graph.grid[xPos][yPos];
 
-				var end = graph.grid[colorblob[0][0]][colorblob[0][1]];
+				var end = graph.grid[xFinish][yFinish];
 				var result = astar.search(graph, start, end);
-				alert(result);
+
+
+				
 
 
 				
@@ -143,6 +164,11 @@
 			<p>ColorBlob <img src = "images/insertButton.png" class = "colorBlobInsert" width = "10" height = "10"></p>
 			<div class = "colorBlobInsertList">
 				좌표  : <input type = "text" name = "colorblob1" class = "colorblob"><br>
+			</div>
+			<div class = "finish">
+				<p>도착점</p>
+				X : <input type = "number" value = "1" id = "finishX" name = "row" min = "1" max = "9"><br>
+				Y : <input type = "number" value = "1" id = "finishY" name = "col" min = "1" max = "9"><br>
 			</div>
 			<p><input type = "submit" id = "btnSubmit" value = "입력"></p>
 		</form>

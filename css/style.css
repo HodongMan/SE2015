@@ -212,6 +212,15 @@ ul#menu li:hover a
 	
 }
 
+#finishObject{
+  width:50px;
+  height:50px;
+
+  background:url("../images/Finish.jpg") no-repeat;
+  position:absolute;
+  
+}
+
 input[type = number]{
 	width:2em;
 }

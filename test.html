@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset = "utf-8">
+	<title>테스트</title>
+	<script type="text/javascript">
+		var SIM ={
+
+			move:function(){
+				alert("무브");
+			}
+		}
+		
+
+		var moveRobot = function(){
+
+		}
+
+		moveRobot.prototype = SIM;
+
+		var unit1 = new moveRobot();
+
+		unit1.move();
+
+		var mapObject = SIM;
+
+		mapObject.move();
+	</script>
+</head>
+<body>
+
+</body>
+</html>

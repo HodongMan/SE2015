@@ -5,6 +5,7 @@ var map = {
 	mapContent : [],
 	hazardContent : [],
 	colorBlobContent : [],
+	finishContent :[],
 
 	mapRow : 1,
 	mapCol : 1,
@@ -55,34 +56,40 @@ var map = {
 		})
 	},
 
-	makeMapContent:function(hazardList, colorBlobList){
+	makeMapContent:function(){
 		
 		var temp;
+		var hazardList = this.hazardContent;
+				
 
-		this.hazardContent = hazardList;
-		this.colorBlobContent = colorBlobList;
-
-		
 		for(var i = 0; i < this.mapCol; i++){
 			this.mapContent[i] = new Array(this.mapCol);
 		}
 
+		if(hazardList === undefined || hazardList === null){
 
-		for(var i = 0; i < this.mapCol; i++){
-			for(var j = 0; j < this.mapRow; j++){
-				this.mapContent[i][j] = 1;
+			for(var i = 0; i < this.mapCol; i++){
+				for(var j = 0; j < this.mapRow; j++){
+					this.mapContent[i][j] = 1;
+				}
 			}
-		}
+		}else{
 
-		
-		for(var i = 0; i < hazardList.length; i++){
+			for(var i = 0; i < this.mapCol; i++){
+				for(var j = 0; j < this.mapRow; j++){
+					this.mapContent[i][j] = 1;
+				}
+			}
 
-			var temp = hazardList[i];
-			this.mapContent[temp[0]][temp[1]] = 0;
+			for(var i = 0; i < hazardList.length; i++){
+
+				temp = hazardList[i];
+				this.mapContent[temp[0]][temp[1]] = 0;
 		
 			
+			}
+
 		}
-		
 
 	},
 
@@ -104,6 +111,10 @@ var map = {
 
 			$("body").append($container);
 		});
+
+		this.hazardContent = hazard;
+
+		
 
 		return hazard;
 
@@ -135,8 +146,18 @@ var map = {
 			$("body").append($container);
 		})
 
+		this.colorBlobContent = colorblob;
+
 		return colorblob;
 	},
+
+	createFinish:function(xPos, yPos){
+		var x = 145 + xPos * 100;
+		var y = 185 + yPos * 100;
+		var finishObject = '<div id = "finishObject" style = "top:'+y+'px; left:'+x+'px;"></div>';
+		this.finishContent[0] = x; this.finishContent[1] = y; 
+		$("body").append(finishObject);
+	}
 
 
 };
