@@ -56,9 +56,20 @@ var SIM = {
 
 	},
 
+	
+};
 
-	followingGivenPath:function(start, result){
+var ADD_ON = (function(SIM){
+	
+	planPath = function(graph, start, end, astar){
+		
+		var result = astar.search(graph, start, end);
+		return result;
+		
+	};
 
+	followingGivenPath = function(start, result, hazard, colorblob){
+		
 		for(var i = 0 ; i < result.length; i++){
 			var before;
 
@@ -74,32 +85,58 @@ var SIM = {
 			}
 			
 			if((before.y < present.y) && (before.x == present.x)){				
-				this.moveToDown();
+				SIM.moveToDown();
+				this.detectColorBlob(colorblob, present);
 			}else if((before.y > present.y) && (before.x == present.x)){						
-				this.moveToUp();
+				SIM.moveToUp();
+				this.detectColorBlob(colorblob, present);
 			}else if((before.y == present.y) && (before.x > present.x)){						
-				this.moveToLeft();
+				SIM.moveToLeft();
+				this.detectColorBlob(colorblob, present);
 			}else if((before.y == present.y) && (before.x < present.x)){						
-				this.moveToRight();
+				SIM.moveToRight();
+				this.detectColorBlob(colorblob, present);
 			}else{
 				alert("위 경로는 도착점에 도착할 수 없습니다.");
 			}
-			
-				
-			
+
+
 		}
-	},
+	};
 
-	planningPath:function(){
+	avoidHazard = function(){
+		
+	};
 
-		var graph = new Graph(map.mapContent);
-		var start = graph.grid[xPos][yPos];
-		var end = graph.grid[xFinish][yFinish];
-		var result = astar.search(graph, start, end);
+	detectColorBlob = function(colorblob, Position){
 
-		return result;
-	}
+		for(var i = 0; i < colorblob.length; i++){
+			if((parseInt(colorblob[0][0]) === Position.x) && (parseInt(colorblob[0][1]) === Position.y)){
 
-	
-	
-};
+				var realX = 278 + Position.x * 100;
+				var realY = 278 + Position.y * 100;
+				var colorBlobHTML = '<div class = "colorBlobObject" style = "top:'+realY+'px; left:'+realX+'px;"></div>'; 
+				
+				$("body").append(colorBlobHTML);
+			}
+			else{
+
+			}
+		}
+	};
+
+	compensateForImperfectMotion = function(){
+
+	};
+
+
+
+	return {
+		SIM:SIM,
+		followingGivenPath:followingGivenPath,
+		planPath:planPath,
+		avoidHazard:avoidHazard,
+		detectColorBlob:detectColorBlob,
+		compensateForImperfectMotion:compensateForImperfectMotion
+	};
+}(SIM));
