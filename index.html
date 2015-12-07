@@ -47,6 +47,7 @@
 
 				hazard = map.createHazard();
 				colorblob = map.createColorBlob();
+				
 				Map.createFinish(xFinish, yFinish);
 				SIM.SIMInit(xPos, yPos);
 				Map.createSIM(xPos, yPos);
@@ -56,7 +57,6 @@
 				
 				Map.handleMapData();
 				//맵 정보 등록하기
-
 				
 				var graph = new Graph(map.mapContent);
 				var start = graph.grid[xPos][yPos];
@@ -67,6 +67,8 @@
 				//var result = SIM.planningPath();
 
 				SIM.followingGivenPath(start, result);
+				
+
 				return false;
 			});
 
@@ -80,35 +82,34 @@
 
   <div id="main">
     <div id="header">
-	  <div id="banner">
-	    <div id="welcome">
-	      <h1>2015 Software Engineering</h1>
-	    </div>
-	    <div id="welcome_slogan">
-	      <h1>작업중입니다.</h1>
-	    </div>
-	  </div>
+      <div id="logo">
+        <div id="logo_text">
+          <!-- class="logo_colour", allows you to change the colour of the text -->
+          <h1><a href="index.html">2015<span class="logo_colour">Software Engineering</span></a></h1>
+          <h2>ADD_ON System 설계</h2>
+        </div>
+      </div>
+      <div id="menubar">
+        <ul id="menu">
+          <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+          <li class="selected"><a href="index.html">실행화면</a></li>
+
+        </ul>
+      </div>
     </div>
+    <div id="site_content">
 
-	<div id="menubar">
-      <ul id="menu">
-        <li class="current"><a href="#">실행화면</a></li>
-
-      </ul>
-    </div>	
-    
-	<div id="site_content">		
-
-		<canvas id="canvas1" width="1024" height="768"></canvas>
-          </div>
-  
+      <div id="content">
+        <!-- insert the page content here -->
+        <canvas id = "canvas1" width = "1024" height = "768">        
+        </canvas>
+      </div>
+    </div>
+    <div id="footer">
+      Copyright &copy; 20119200XX 박윤하 |  | 20119200XX 예준형 | 2011920049 장호동 | 위 프로그램의 저작권은 위 3명에게 있습니다.
+    </div>
   </div>
-  
-  <div id="footer">
-	  <a href="#">20119200xx 박윤하</a> | <a href="#">20119200xx 예준형</a> | <a href="#">2011920049 장호동</a> | <a href="#">위 프로그램의 저작권은 3명에게 있습니다.</a>
-  </div>  
 
-	
 	<div id = "formBoard">
 		<form>
 			<p>맵 크기</p>

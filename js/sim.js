@@ -5,8 +5,8 @@ var SIM = {
 	current_left:0,
 
 	SIMInit:function(xPos, yPos){
-		this.current_top = 185 + yPos * 100;
-		this.current_left = 145 + xPos * 100;
+		this.current_top = 278 + yPos * 100;
+		this.current_left = 278 + xPos * 100;
 	},
 
 	moveToUp:function(){
@@ -82,7 +82,7 @@ var SIM = {
 			}else if((before.y == present.y) && (before.x < present.x)){						
 				this.moveToRight();
 			}else{
-
+				alert("위 경로는 도착점에 도착할 수 없습니다.");
 			}
 			
 				

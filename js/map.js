@@ -18,37 +18,40 @@ var map = {
 	handleMapData:function(){
 		
 		var temp;
-		var hazardList = this.hazardContent;
-				
 
-		for(var i = 0; i < this.mapCol; i++){
+		for(var i = 0; i <= this.mapCol; i++){
 			this.mapContent[i] = new Array(this.mapCol);
 		}
-
-		if(hazardList === undefined || hazardList === null){
-
-			for(var i = 0; i < this.mapCol; i++){
-				for(var j = 0; j < this.mapRow; j++){
+		
+		if(this.hazardContent === undefined || this.hazardContent === null){
+			
+			for(var i = 0; i <= this.mapCol; i++){
+				for(var j = 0; j <= this.mapRow; j++){
 					this.mapContent[i][j] = 1;
 				}
 			}
+			
 		}else{
 
-			for(var i = 0; i < this.mapCol; i++){
-				for(var j = 0; j < this.mapRow; j++){
+			var hazardList = this.hazardContent;
+		
+			for(var i = 0; i <= this.mapCol; i++){
+				for(var j = 0; j <= this.mapRow; j++){
 					this.mapContent[i][j] = 1;
 				}
 			}
+			
 
+			
 			for(var i = 0; i < hazardList.length; i++){
 
 				temp = hazardList[i];
 				this.mapContent[temp[0]][temp[1]] = 0;
-		
 			
 			}
-
+		
 		}
+		
 
 	},
 
@@ -57,34 +60,41 @@ var map = {
 
 		var hazard = [];
 
-
 		$(".hazard").each(function(i, e){
-
-			var makeHazard = $(this).val().split(",");
-			var realX = 145 + makeHazard[0] * 100;
-			var realY = 185 + makeHazard[1] * 100;
-			var hazardHTML = '<div class = "hazardObject" style = "top:'+realY+'px; left:'+realX+'px;"></div>'; 
 			
-			hazard[i] = makeHazard;
-			var $container = hazardHTML;
+			try{
+				var makeHazard = $(this).val().split(",");
+				if(makeHazard[0] === undefined || makeHazard[1] === undefined){
+					this.hazardContent = null;
+					return null;
+				}
+				var realX = 278 + makeHazard[0] * 100;
+				var realY = 278 + makeHazard[1] * 100;
 
-			$("body").append($container);
+				var hazardHTML = '<div class = "hazardObject" style = "top:'+realY+'px; left:'+realX+'px;"></div>'; 
+				
+				$("body").append(hazardHTML);
+				hazard[i] = makeHazard;
+				
+				
+			}
+			catch(exception){
+				this.hazardContent = null;
+				return null;
+			}
+
+			
 		});
-
 		this.hazardContent = hazard;
 
-		
-
 		return hazard;
-
-
 		
 
 	},
 
 	createSIM:function(xPos, yPos){
-		var x = 145 + xPos * 100;
-		var y = 185 + yPos * 100;
+		var x = 278 + xPos * 100;
+		var y = 278 + yPos * 100;
 		var SIMObject = '<div id = "SIM" style = "top:'+y+'px; left:'+x+'px;"></div>';
 		this.SIMPosition[0] = x; this.SIMPosition[1] = y; 
 		$("body").append(SIMObject);
@@ -94,25 +104,34 @@ var map = {
 		var colorblob = [];
 
 		$(".colorblob").each(function(i, e){
-			var makeColorBlob = $(this).val().split(",");
-			var realX = 145 + makeColorBlob[0] * 100;
-			var realY = 185 + makeColorBlob[1] * 100;
-			var hazardHTML = '<div class = "colorBlobObject" style = "top:'+realY+'px; left:'+realX+'px;"></div>'; 
-			var $container = hazardHTML;
-			colorblob[i] = makeColorBlob;
+			
+			try{
+				var makeColorBlob = $(this).val().split(",");
+				if(makeColorBlob[0] === undefined || makeColorBlob[1] === undefined){
+					this.colorBlobContent = null;
+					return null;
+				}
+				var realX = 278 + makeColorBlob[0] * 100;
+				var realY = 278 + makeColorBlob[1] * 100;
+				var hazardHTML = '<div class = "colorBlobObject" style = "top:'+realY+'px; left:'+realX+'px;"></div>'; 
+				var $container = hazardHTML;
+				colorblob[i] = makeColorBlob;
+				$("body").append($container);
+			}
+			catch(exception){
+				this.colorBlobContent = null;
+				return null;
+			}
+		});
 
-
-			$("body").append($container);
-		})
-
+		
 		this.colorBlobContent = colorblob;
-
 		return colorblob;
 	},
 
 	createFinish:function(xPos, yPos){
-		var x = 145 + xPos * 100;
-		var y = 185 + yPos * 100;
+		var x = 278 + xPos * 100;
+		var y = 278 + yPos * 100;
 		var finishObject = '<div id = "finishObject" style = "top:'+y+'px; left:'+x+'px;"></div>';
 		this.finishContent[0] = x; this.finishContent[1] = y; 
 		$("body").append(finishObject);

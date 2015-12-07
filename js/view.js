@@ -71,6 +71,9 @@ var viewMapForm = {
 		$("#SIM").each(function(i, e){
 			$(this).remove();
 		})
+		$("#finishObject").each(function(i, e){
+			$(this).remove();
+		})
 	},
 
 	
