@@ -111,12 +111,13 @@ var map = {
 					this.colorBlobContent = null;
 					return null;
 				}
+
 				var realX = 278 + makeColorBlob[0] * 100;
 				var realY = 278 + makeColorBlob[1] * 100;
-				var hazardHTML = '<div class = "colorBlobObject" style = "top:'+realY+'px; left:'+realX+'px;"></div>'; 
-				var $container = hazardHTML;
+			//	var hazardHTML = '<div class = "colorBlobObject" style = "top:'+realY+'px; left:'+realX+'px;"></div>'; 
+			//	var $container = hazardHTML;
 				colorblob[i] = makeColorBlob;
-				$("body").append($container);
+			//	$("body").append($container);
 			}
 			catch(exception){
 				this.colorBlobContent = null;
@@ -129,12 +130,36 @@ var map = {
 		return colorblob;
 	},
 
-	createFinish:function(xPos, yPos){
-		var x = 278 + xPos * 100;
-		var y = 278 + yPos * 100;
-		var finishObject = '<div id = "finishObject" style = "top:'+y+'px; left:'+x+'px;"></div>';
-		this.finishContent[0] = x; this.finishContent[1] = y; 
-		$("body").append(finishObject);
+	createFinish:function(){
+		var finish = [];
+
+		$(".finish").each(function(i, e){
+			
+			try{
+				var makeFinish = $(this).val().split(",");
+
+				if(makeFinish[0] === undefined || makeFinish[1] === undefined){
+					this.finishContent = null;
+					return null;
+				}
+
+				var realX = 278 + makeFinish[0] * 100;
+				var realY = 278 + makeFinish[1] * 100;
+				var finishHTML = '<div class = "finishObject" style = "top:'+realY+'px; left:'+realX+'px;"></div>';
+				var $container = finishHTML;
+				finish[i] = makeFinish;
+				$("body").append($container);
+			}
+			catch(exception){
+				this.finishContent = null;
+				return null;
+			}
+		});
+
+		
+		this.finishContent = finish;
+		return finish;
+		
 	}
 
 

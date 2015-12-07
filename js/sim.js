@@ -75,7 +75,7 @@ var SIM = {
 			
 			if((before.y < present.y) && (before.x == present.x)){				
 				this.moveToDown();
-			}else if((before.y < present.y) && (before.x == present.x)){						
+			}else if((before.y > present.y) && (before.x == present.x)){						
 				this.moveToUp();
 			}else if((before.y == present.y) && (before.x > present.x)){						
 				this.moveToLeft();

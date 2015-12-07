@@ -23,7 +23,7 @@
 
 					
 			$("#btnSubmit").click(function(){
-				var row, col, xPos, yPos, xFinish, yFinish, hazard = [], colorblob = [];
+				var row, col, xPos, yPos, finish = [], hazard = [], colorblob = [];
 				
 				View.clearHazardColorBlob();
 				$("#canvas1").clearCanvas();
@@ -35,9 +35,6 @@
 				xPos = $("#xPos").val();
 				yPos = $("#yPos").val();
 
-				xFinish = $("#finishX").val();
-				yFinish = $("#finishY").val();
-
 				//Form에서 값을 가져온다.
 
 				View.drawBoard(row,col);
@@ -45,10 +42,12 @@
 
 				//Board 그리기
 
-				hazard = map.createHazard();
-				colorblob = map.createColorBlob();
+				hazard = Map.createHazard();
+				colorblob = Map.createColorBlob();
+				finish = Map.createFinish();
+
 				
-				Map.createFinish(xFinish, yFinish);
+
 				SIM.SIMInit(xPos, yPos);
 				Map.createSIM(xPos, yPos);
 				
@@ -59,14 +58,29 @@
 				//맵 정보 등록하기
 				
 				var graph = new Graph(map.mapContent);
-				var start = graph.grid[xPos][yPos];
-				var end = graph.grid[xFinish][yFinish];
-				var result = astar.search(graph, start, end);
 				
+				
+				
+				for(var i = 0; i < finish.length;i++){
 
-				//var result = SIM.planningPath();
+					if(i == 0){
+						var start = graph.grid[xPos][yPos];
+						var end = graph.grid[finish[i][0]][finish[i][1]];
+						var result = astar.search(graph, start, end);
+						alert(result);
+						SIM.followingGivenPath(start, result);
+					}else{
+						var start = graph.grid[finish[i-1][0]][finish[i-1][1]];
+						var end = graph.grid[finish[i][0]][finish[i][1]];
+						var result = astar.search(graph, start, end);
+						alert(result);
+						SIM.followingGivenPath(start, result);
+					}
+					
+				}
 
-				SIM.followingGivenPath(start, result);
+
+				
 				
 
 				return false;
@@ -128,10 +142,9 @@
 			<div class = "colorBlobInsertList">
 				좌표  : <input type = "text" name = "colorblob1" class = "colorblob"><br>
 			</div>
-			<div class = "finish">
-				<p>도착점</p>
-				X : <input type = "number" value = "1" id = "finishX" name = "row" min = "1" max = "9"><br>
-				Y : <input type = "number" value = "1" id = "finishY" name = "col" min = "1" max = "9"><br>
+			<p>Finish <img src = "images/insertButton.png" class = "finishInsert" width = "10" height = "10"></p>
+			<div class = "finishInsertList">
+				좌표  : <input type = "text" name = "finish1" class = "finish"><br>
 			</div>
 			<p><input type = "submit" id = "btnSubmit" value = "입력"></p>
 		</form>

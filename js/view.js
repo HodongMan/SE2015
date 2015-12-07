@@ -56,6 +56,12 @@ var viewMapForm = {
 		})
 	},
 
+	makeFinishInsert:function(){
+		$(".finishInsert").click(function(){
+			$(".finishInsertList").append('좌표  : <input type = "text" name = "finish1" class = "finish"><br>');
+		})
+	},
+
 	clearHazardColorBlob:function(){
 		$(".hazardObject").each(function(i, e){
 
@@ -71,9 +77,11 @@ var viewMapForm = {
 		$("#SIM").each(function(i, e){
 			$(this).remove();
 		})
-		$("#finishObject").each(function(i, e){
+		$(".finishObject").each(function(i, e){
 			$(this).remove();
 		})
+
+
 	},
 
 	
@@ -81,6 +89,7 @@ var viewMapForm = {
 		this.clearHazardColorBlob();
 		this.makeHazardInsert();
 		this.makeColorBlobInsert();
+		this.makeFinishInsert();
 		this.drawBoard(5,5);
 		this.makeFormBoard();
 	}
