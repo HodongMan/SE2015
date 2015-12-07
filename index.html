@@ -14,23 +14,17 @@
 	<script type="text/javascript" src = "js/astar.js"></script>
 	<script type="text/javascript">
 
-
-
 		$(document).ready(function() {
-			var View = view;
+			var View = viewMapForm;
 			var Map = map;
-			Map.drawBoard(5, 5);
-			Map.makeFormBoard();
-			View.clearHazardColorBlob();
-			View.makeHazardInsert();
-			View.makeColorBlobInsert();
-
+			
+			View.viewInit();
+			//View 
 
 					
 			$("#btnSubmit").click(function(){
 				var row, col, xPos, yPos, xFinish, yFinish, hazard = [], colorblob = [];
 				
-
 				View.clearHazardColorBlob();
 				$("#canvas1").clearCanvas();
 				// 맵과 각종 오브젝트를 지운다.
@@ -46,7 +40,8 @@
 
 				//Form에서 값을 가져온다.
 
-				Map.drawBoard(row,col);
+				View.drawBoard(row,col);
+				Map.mapInit(row, col);
 
 				//Board 그리기
 
@@ -59,52 +54,19 @@
 				//오브젝트 그리기
 
 				
-				Map.makeMapContent();
+				Map.handleMapData();
 				//맵 정보 등록하기
 
 				
 				var graph = new Graph(map.mapContent);
-				
 				var start = graph.grid[xPos][yPos];
-
 				var end = graph.grid[xFinish][yFinish];
 				var result = astar.search(graph, start, end);
-
-
 				
 
+				//var result = SIM.planningPath();
 
-				
-				for(var i = 0 ; i < result.length; i++){
-					var before;
-
-					var present;
-
-					if(i ==0){
-						before = start;
-						present = result[i];
-					}
-					else{
-						before = result[i-1];
-						present = result[i];
-					}
-
-					if((before.y < present.y) && (before.x == present.x)){				
-						SIM.moveToDown();
-					}else if((before.y < present.y) && (before.x == present.x)){						
-						SIM.moveToUp();
-					}else if((before.y == present.y) && (before.x > present.x)){						
-						SIM.moveToLeft();
-					}else if((before.y == present.y) && (before.x < present.x)){						
-						SIM.moveToRight();
-					}else{
-
-					}
-						
-					
-				}
-								
-
+				SIM.followingGivenPath(start, result);
 				return false;
 			});
 
@@ -121,30 +83,30 @@
 	  <div id="banner">
 	    <div id="welcome">
 	      <h1>2015 Software Engineering</h1>
-	    </div><!--close welcome-->
+	    </div>
 	    <div id="welcome_slogan">
 	      <h1>작업중입니다.</h1>
-	    </div><!--close welcome_slogan-->
-	  </div><!--close banner-->
-    </div><!--close header-->
+	    </div>
+	  </div>
+    </div>
 
 	<div id="menubar">
       <ul id="menu">
         <li class="current"><a href="#">실행화면</a></li>
 
       </ul>
-    </div><!--close menubar-->	
+    </div>	
     
 	<div id="site_content">		
 
 		<canvas id="canvas1" width="1024" height="768"></canvas>
           </div>
   
-  </div><!--close main-->
+  </div>
   
   <div id="footer">
 	  <a href="#">20119200xx 박윤하</a> | <a href="#">20119200xx 예준형</a> | <a href="#">2011920049 장호동</a> | <a href="#">위 프로그램의 저작권은 3명에게 있습니다.</a>
-  </div><!--close footer-->  
+  </div>  
 
 	
 	<div id = "formBoard">

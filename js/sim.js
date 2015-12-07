@@ -54,7 +54,52 @@ var SIM = {
 
 	moveToRotate : function(){
 
+	},
+
+
+	followingGivenPath:function(start, result){
+
+		for(var i = 0 ; i < result.length; i++){
+			var before;
+
+			var present;
+
+			if(i ==0){
+				before = start;
+				present = result[i];
+			}
+			else{
+				before = result[i-1];
+				present = result[i];
+			}
+			
+			if((before.y < present.y) && (before.x == present.x)){				
+				this.moveToDown();
+			}else if((before.y < present.y) && (before.x == present.x)){						
+				this.moveToUp();
+			}else if((before.y == present.y) && (before.x > present.x)){						
+				this.moveToLeft();
+			}else if((before.y == present.y) && (before.x < present.x)){						
+				this.moveToRight();
+			}else{
+
+			}
+			
+				
+			
+		}
+	},
+
+	planningPath:function(){
+
+		var graph = new Graph(map.mapContent);
+		var start = graph.grid[xPos][yPos];
+		var end = graph.grid[xFinish][yFinish];
+		var result = astar.search(graph, start, end);
+
+		return result;
 	}
+
 	
 	
 };
