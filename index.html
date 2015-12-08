@@ -35,7 +35,9 @@
 
 				//Form에서 값을 가져온다.
 
-				View.drawBoard(row,col);
+				if(!View.drawBoard(row,col)){
+					return false;
+				}
 				Map.mapInit(row, col);
 
 				//Board 그리기
@@ -43,8 +45,6 @@
 				hazard = Map.createHazard();
 				colorblob = Map.createColorBlob();
 				finish = Map.createFinish();
-
-				
 
 				SIM.SIMInit(xPos, yPos);
 				Map.createSIM(xPos, yPos);

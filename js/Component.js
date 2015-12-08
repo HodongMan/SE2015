@@ -70,6 +70,31 @@ var SIM = {
 		};
 	},
 
+	scanHazard:function(hazard){
+
+		var position = this.getPosition();
+
+		
+		for(var i = 0; i < hazard.length; i++){
+			if((hazard[i][0] === parseInt(position.xPos)) && (hazard[i][1] === parseInt(position.yPos))){
+				return true;
+			}
+		}
+		return false;
+		
+	},
+
+	scanColorBlob:function(colorblob){
+		var position = this.getPosition();
+
+		for(var i = 0; i < hazard.length; i++){
+			if((colorblob[i][0] === parseInt(position.xPos)) && (colorblob[i][1] === parseInt(position.yPos))){
+				return true;
+			}
+		}
+		return false;
+	},
+
 	
 };
 

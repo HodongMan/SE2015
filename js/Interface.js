@@ -48,6 +48,8 @@ var viewMapForm = {
 				this.drawOneRect(100 + i * 100, 100 + j * 100);
 			}
 		}
+
+		return true;
 	
 	},
 
