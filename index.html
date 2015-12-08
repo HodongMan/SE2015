@@ -99,7 +99,7 @@
       <div id="logo">
         <div id="logo_text">
           <!-- class="logo_colour", allows you to change the colour of the text -->
-          <h1><a href="index.html">2015<span class="logo_colour">Software Engineering</span></a></h1>
+          <h1><a href="index.html">2015 <span class="logo_colour">Software Engineering</span></a></h1>
           <h2>ADD_ON System 설계</h2>
         </div>
       </div>
@@ -126,27 +126,31 @@
 
 	<div id = "formBoard">
 		<form>
-			<p>맵 크기</p>
-			행 : <input type = "number" value = "1" id = "row" name = "row" min = "1" max = "9" required><br>
-			열 : <input type = "number" value = "1" id = "col" name = "col" min = "1" max = "12" required><br>
-			<p>로봇 추가</p>
+			<fieldset>
+				<legend>입력 창</legend>
+				<p>맵 크기</p>
+				행 : <input type = "number" value = "1" id = "row" name = "row" min = "1" max = "9" required>
+				열 : <input type = "number" value = "1" id = "col" name = "col" min = "1" max = "12" required>
+				<p>로봇 추가</p>
 
-			X : <input type = "number" value = "1" id = "xPos" name = "xPos" min = "1" max = "9"><br>
-			Y : <input type = "number" value = "1" id = "yPos" name = "yPos" min = "1" max = "9"><br>
+				X : <input type = "number" value = "0" id = "xPos" name = "xPos" min = "0" max = "9">
+				Y : <input type = "number" value = "0" id = "yPos" name = "yPos" min = "0" max = "12"><br>
 
-			<p>Hazard <img src = "images/insertButton.png" class = "hazardInsert" width = "10" height = "10"></p>
-			<div class = "hazardInsertList">
-				좌표  : <input type = "text" name = "hazard1" class = "hazard"><br>
-			</div>
-			<p>ColorBlob <img src = "images/insertButton.png" class = "colorBlobInsert" width = "10" height = "10"></p>
-			<div class = "colorBlobInsertList">
-				좌표  : <input type = "text" name = "colorblob1" class = "colorblob"><br>
-			</div>
-			<p>Finish <img src = "images/insertButton.png" class = "finishInsert" width = "10" height = "10"></p>
-			<div class = "finishInsertList">
-				좌표  : <input type = "text" name = "finish1" class = "finish" required><br>
-			</div>
-			<p><input type = "submit" id = "btnSubmit" value = "입력"></p>
+				Hazard <img src = "images/insertButton.png" class = "hazardInsert" width = "10" height = "10">
+				<div class = "hazardInsertList">
+					좌표  : <input type = "text" name = "hazard1" class = "hazard" placeholder = "1,2"><br>
+				</div>
+				
+				ColorBlob <img src = "images/insertButton.png" class = "colorBlobInsert" width = "10" height = "10">
+				<div class = "colorBlobInsertList">
+					좌표  : <input type = "text" name = "colorblob1" class = "colorblob" placeholder = "2,3"><br>
+				</div>
+				Finish <img src = "images/insertButton.png" class = "finishInsert" width = "10" height = "10">
+				<div class = "finishInsertList">
+					좌표  : <input type = "text" name = "finish1" class = "finish" placeholder = "3,4" required><br>
+				</div>
+				<p><input type = "submit" id = "btnSubmit" value = "작동"></p>
+			</fieldset>
 		</form>
 	</div>
 </body>

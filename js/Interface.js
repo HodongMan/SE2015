@@ -1,3 +1,10 @@
+/*jslint browser : true, continue : true,
+	devel : true, indent : 2, maxerr : 50,
+	newcap: true, nomen : true, plusplus: true,
+	regexp : true, sloppy : true, vars = true,
+	while: true
+*/
+
 var viewMapForm = {
 
 	makeFormBoard:function(){
@@ -26,7 +33,7 @@ var viewMapForm = {
 
 	drawBoard:function(row, col){
 
-		if(row > 9 || col > 9 || row < 1 || col < 1){
+		if(row > 9 || col > 12 || row < 1 || col < 1){
 			alert("올바른 입력값이 아닙니다. 다시 입력하세요");
 
 			$("#row").val("1");

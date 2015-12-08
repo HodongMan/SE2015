@@ -87,13 +87,7 @@ ol li
 #main, #logo, #menubar, #site_content, #footer
 { margin-left: auto; 
   margin-right: auto;}
-/*
-  #main{
-    position: absolute;
-    top:100px;
-    left:100px;
-  }
-*/
+
 #header
 { background: #A80000;
   height: 240px;}
@@ -173,21 +167,6 @@ ul#menu li a:hover, ul#menu li.selected a, ul#menu li.selected a:hover
   background: #FFF url(../images/content.png) no-repeat;} 
 /* 노필요 시작 */
 
-#content
-{ text-align: left;
-  width: 1400px;
-  padding: 0;}
-
-#content ul
-{ margin: 2px 0 22px 0px;}
-
-#content ul li
-{ list-style-type: none;
-  background: url(../images/bullet.png) no-repeat;
-  margin: 0 0 6px 0; 
-  padding: 0 0 4px 25px;
-  line-height: 1.5em;}
-
 #footer
 { width: 1400px;
   font: normal 100% 'lucida sans unicode', arial, sans-serif;
@@ -210,83 +189,6 @@ ul#menu li a:hover, ul#menu li.selected a, ul#menu li.selected a:hover
 #footer a:hover
 { color: #FFF;
   text-decoration: underline;}
-
-.search
-{ color: #5D5D5D; 
-  border: 1px solid #BBB; 
-  width: 134px; 
-  padding: 4px; 
-  font: 100% arial, sans-serif;}
-
-#colours
-{ height: 0px;
-  text-align: right;
-  padding: 66px 16px 0px 300px;}
-  
-.form_settings
-{ margin: 15px 0 0 0;}
-
-.form_settings p
-{ padding: 0 0 4px 0;}
-
-.form_settings span
-{ float: left; 
-  width: 200px; 
-  text-align: left;}
-  
-.form_settings input, .form_settings textarea
-{ padding: 5px; 
-  width: 299px; 
-  font: 100% arial; 
-  border: 1px solid #E5E5DB; 
-  background: #FFF; 
-  color: #47433F;}
-  
-.form_settings .submit
-{ font: 100% arial; 
-  border: 1px solid; 
-  width: 99px; 
-  margin: 0 0 0 212px; 
-  height: 33px;
-  padding: 2px 0 3px 0;
-  cursor: pointer; 
-  background: #7D0F0F; 
-  color: #FFF;}
-
-.form_settings textarea, .form_settings select
-{ font: 100% arial; 
-  width: 299px;}
-
-.form_settings select
-{ width: 310px;}
-
-.form_settings .checkbox
-{ margin: 4px 0; 
-  padding: 0; 
-  width: 14px;
-  border: 0;
-  background: none;}
-
-.separator
-{ width: 100%;
-  height: 0;
-  border-top: 1px solid #D9D5CF;
-  border-bottom: 1px solid #FFF;
-  margin: 0 0 20px 0;}
-  
-table
-{ margin: 10px 0 30px 0;}
-
-table tr th, table tr td
-{ background: #3B3B3B;
-  color: #FFF;
-  padding: 7px 4px;
-  text-align: left;}
-  
-table tr td
-{ background: #F0EFE2;
-  color: #47433F;
-  border-top: 1px solid #FFF;}
 
 
 #SIM{
@@ -312,15 +214,106 @@ input[type = number]{
 }
 
 #formBoard {
-  width: 100px;
-  background-color: rgb(110,138,195);
-  padding: 20px 20px 0 20px;
+  max-width: 300px;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background: #f4f7f8;
+  border-radius: 8px;
   position: absolute;
+  font-size:16px;
+  font-weight: bold;
   top:50px;
   left: -112px;
-  z-index: 100;
-  color:white;
 }
+
+
+legend {
+      color:#0481b1;
+      font-size:16px;
+      padding:0 10px;
+      background:#fff;
+      -moz-border-radius:4px;
+      box-shadow: 0 1px 5px rgba(4, 129, 177, 0.5);
+      padding:5px 10px;
+      text-transform:uppercase;
+      font-family:Helvetica, sans-serif;
+      font-weight:bold;
+  }
+  fieldset {
+      border-radius:4px;
+      background: #fff; 
+      background: -moz-linear-gradient(#fff, #f9fdff);
+      background: -o-linear-gradient(#fff, #f9fdff);
+      background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#f9fdff)); /
+      background: -webkit-linear-gradient(#fff, #f9fdff);
+      padding:20px;
+      border-color:rgba(4, 129, 177, 0.4);
+  }
+input,
+    textarea {
+        color: #373737;
+        background: #fff;
+        border: 1px solid #CCCCCC;
+        color: #aaa;
+        font-size: 14px;
+        line-height: 1.2em;
+        margin-bottom:15px;
+
+        -moz-border-radius:4px;
+        -webkit-border-radius:4px;
+        border-radius:4px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+
+    input[type="number"]:focus,
+    input[type="text"]:focus {
+        background:#f5fcfe;
+        text-indent: 0;
+        z-index: 1;
+        color: #373737;
+        -webkit-transition-duration: 400ms;
+        -webkit-transition-property: width, background;
+        -webkit-transition-timing-function: ease;
+        -moz-transition-duration: 400ms;
+        -moz-transition-property: width, background;
+        -moz-transition-timing-function: ease;
+        -o-transition-duration: 400ms;
+        -o-transition-property: width, background;
+        -o-transition-timing-function: ease;
+        border-color:#ccc;
+        box-shadow:0 0 5px rgba(4, 129, 177, 0.5);
+        opacity:0.6;
+    }
+
+    input[type = "number"]:focus{
+      width:30px;
+      height:20px;
+    }
+
+    input[type = "text"]:focus{
+      width:50px;
+      height:20px;
+    }
+
+#btnSubmit {
+  padding: 5px;
+  margin:5px;
+  color: #FFF;
+  background-color: #4bc970;
+  font-size: 14px;
+  text-align: center;
+  font-style: normal;
+  border-radius: 5px;
+
+  border: 1px solid #3ac162;
+  border-width: 1px 1px 3px;
+  box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
+  float:right;
+  
+}
+
+
 
 input.hazard, input.colorblob, input.finish{
   width:3em;

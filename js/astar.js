@@ -1,5 +1,5 @@
 (function(definition) {
-    /* global module, define */
+   /* 정의 INIT Class */
     if(typeof module === 'object' && typeof module.exports === 'object') {
         module.exports = definition();
     } else if(typeof define === 'function' && define.amd) {
@@ -19,26 +19,16 @@ function pathTo(node){
         curr = curr.parent;
     }
     return path;
-}
+} // 경로를 추가하는 함구
 
 function getHeap() {
     return new BinaryHeap(function(node) {
         return node.f;
     });
-}
+} // HEAP NODE에서 데이터를 가져옴
 
 var astar = {
-    /**
-    * Perform an A* Search on a graph given a start and end node.
-    * @param {Graph} graph
-    * @param {GridNode} start
-    * @param {GridNode} end
-    * @param {Object} [options]
-    * @param {bool} [options.closest] Specifies whether to return the
-               path to the closest node if the target is unreachable.
-    * @param {Function} [options.heuristic] Heuristic function (see
-    *          astar.heuristics).
-    */
+
     search: function(graph, start, end, options) {
         graph.cleanDirty();
         options = options || {};
@@ -46,7 +36,7 @@ var astar = {
             closest = options.closest || false;
 
         var openHeap = getHeap(),
-            closestNode = start; // set the start node to be the closest if required
+            closestNode = start; // 가까운 노드를 시작점으로 지정
 
         start.h = heuristic(start, end);
 
@@ -54,36 +44,36 @@ var astar = {
 
         while(openHeap.size() > 0) {
 
-            // Grab the lowest f(x) to process next.  Heap keeps this sorted for us.
+            // 가장 낮은 지역의 다음 값을 HEAP에서 가져옴 정렬되어있다
             var currentNode = openHeap.pop();
 
-            // End case -- result has been found, return the traced path.
+            // 길따라 데이터를 추가한다.
             if(currentNode === end) {
                 return pathTo(currentNode);
             }
 
-            // Normal case -- move currentNode from open to closed, process each of its neighbors.
+            // 가까운 이웃을 따라갈수 있도록 데이터 설정
             currentNode.closed = true;
 
-            // Find all neighbors for the current node.
+            // 현재 노드에서 이웃을 가져온다.
             var neighbors = graph.neighbors(currentNode);
 
             for (var i = 0, il = neighbors.length; i < il; ++i) {
                 var neighbor = neighbors[i];
 
                 if (neighbor.closed || neighbor.isWall()) {
-                    // Not a valid node to process, skip to next neighbor.
+
+                   //데이터가 피해야 할 것 HAZARD... 과감하게 제낀다
                     continue;
                 }
 
-                // The g score is the shortest distance from start to current node.
-                // We need to check if the path we have arrived at this neighbor is the shortest one we have seen yet.
+                //시작점 부터 가장 가까운 경로를 찾는 과정이다.
                 var gScore = currentNode.g + neighbor.getCost(currentNode),
                     beenVisited = neighbor.visited;
 
                 if (!beenVisited || gScore < neighbor.g) {
 
-                    // Found an optimal (so far) path to this node.  Take score for node to see how good it is.
+                    // 가장 먼 거리로부터 최적의 경로를 찾는다.
                     neighbor.visited = true;
                     neighbor.parent = currentNode;
                     neighbor.h = neighbor.h || heuristic(neighbor, end);
@@ -91,19 +81,18 @@ var astar = {
                     neighbor.f = neighbor.g + neighbor.h;
                     graph.markDirty(neighbor);
                     if (closest) {
-                        // If the neighbour is closer than the current closestNode or if it's equally close but has
-                        // a cheaper path than the current closest node then it becomes the closest node
+                        //  가장 값싼 경로를 찾는 과정
                         if (neighbor.h < closestNode.h || (neighbor.h === closestNode.h && neighbor.g < closestNode.g)) {
                             closestNode = neighbor;
                         }
                     }
 
                     if (!beenVisited) {
-                        // Pushing to heap will put it in proper place based on the 'f' value.
+                        // HEAP에다가 데이터를 넣는다.
                         openHeap.push(neighbor);
                     }
                     else {
-                        // Already seen the node, but since it has been rescored we need to reorder it in the heap
+                        // 만약 HEAP에 이미 데이터가 있는 경우 다시 사용한다.
                         openHeap.rescoreElement(neighbor);
                     }
                 }
@@ -114,10 +103,10 @@ var astar = {
             return pathTo(closestNode);
         }
 
-        // No result was found - empty array signifies failure to find path.
+       // 결과가 없는 경우 undefine array를 반환한다.
         return [];
     },
-    // See list of heuristics: http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html
+    // heurisitcs 과정을 init한다
     heuristics: {
         manhattan: function(pos0, pos1) {
             var d1 = Math.abs(pos1.x - pos0.x);
@@ -142,12 +131,7 @@ var astar = {
     }
 };
 
-/**
-* A graph memory structure
-* @param {Array} gridIn 2D array of input weights
-* @param {Object} [options]
-* @param {bool} [options.diagonal] Specifies whether diagonal moves are allowed
-*/
+// 데이터를 만드는 과정이다.
 function Graph(gridIn, options) {
     options = options || {};
     this.nodes = [];
@@ -189,43 +173,43 @@ Graph.prototype.neighbors = function(node) {
         y = node.y,
         grid = this.grid;
 
-    // West
+    // 서쪽
     if(grid[x-1] && grid[x-1][y]) {
         ret.push(grid[x-1][y]);
     }
 
-    // East
+    // 동쪽
     if(grid[x+1] && grid[x+1][y]) {
         ret.push(grid[x+1][y]);
     }
 
-    // South
+    // 남쪽
     if(grid[x] && grid[x][y-1]) {
         ret.push(grid[x][y-1]);
     }
 
-    // North
+    // 북쪽
     if(grid[x] && grid[x][y+1]) {
         ret.push(grid[x][y+1]);
     }
 
     if (this.diagonal) {
-        // Southwest
+        // 남서
         if(grid[x-1] && grid[x-1][y-1]) {
             ret.push(grid[x-1][y-1]);
         }
 
-        // Southeast
+        // 남동
         if(grid[x+1] && grid[x+1][y-1]) {
             ret.push(grid[x+1][y-1]);
         }
 
-        // Northwest
+        // 북서
         if(grid[x-1] && grid[x-1][y+1]) {
             ret.push(grid[x-1][y+1]);
         }
 
-        // Northeast
+        // 북동
         if(grid[x+1] && grid[x+1][y+1]) {
             ret.push(grid[x+1][y+1]);
         }
@@ -236,7 +220,7 @@ Graph.prototype.neighbors = function(node) {
 
 Graph.prototype.toString = function() {
     var graphString = [],
-        nodes = this.grid, // when using grid
+        nodes = this.grid, 
         rowDebug, row, y, l;
     for (var x = 0, len = nodes.length; x < len; x++) {
         rowDebug = [];
@@ -260,7 +244,7 @@ GridNode.prototype.toString = function() {
 };
 
 GridNode.prototype.getCost = function(fromNeighbor) {
-    // Take diagonal weight into consideration.
+    // 만약 Weight가 있는 경우 그걸 적용
     if (fromNeighbor && fromNeighbor.x != this.x && fromNeighbor.y != this.y) {
         return this.weight * 1.41421;
     }
@@ -278,19 +262,15 @@ function BinaryHeap(scoreFunction){
 
 BinaryHeap.prototype = {
     push: function(element) {
-        // Add the new element to the end of the array.
+        // 새로운 요소를 배열 마지막에 넣는다
         this.content.push(element);
 
-        // Allow it to sink down.
+        // sink down 시킨다
         this.sinkDown(this.content.length - 1);
     },
     pop: function() {
-        // Store the first element so we can return it later.
         var result = this.content[0];
-        // Get the element at the end of the array.
         var end = this.content.pop();
-        // If there are any elements left, put the end element at the
-        // start, and let it bubble up.
         if (this.content.length > 0) {
             this.content[0] = end;
             this.bubbleUp(0);
@@ -300,8 +280,6 @@ BinaryHeap.prototype = {
     remove: function(node) {
         var i = this.content.indexOf(node);
 
-        // When it is found, the process seen in 'pop' is repeated
-        // to fill up the hole.
         var end = this.content.pop();
 
         if (i !== this.content.length - 1) {
@@ -322,54 +300,44 @@ BinaryHeap.prototype = {
         this.sinkDown(this.content.indexOf(node));
     },
     sinkDown: function(n) {
-        // Fetch the element that has to be sunk.
         var element = this.content[n];
 
-        // When at 0, an element can not sink any further.
         while (n > 0) {
 
-            // Compute the parent element's index, and fetch it.
             var parentN = ((n + 1) >> 1) - 1,
                 parent = this.content[parentN];
-            // Swap the elements if the parent is greater.
             if (this.scoreFunction(element) < this.scoreFunction(parent)) {
                 this.content[parentN] = element;
                 this.content[n] = parent;
-                // Update 'n' to continue at the new position.
                 n = parentN;
             }
-            // Found a parent that is less, no need to sink any further.
             else {
                 break;
             }
         }
     },
     bubbleUp: function(n) {
-        // Look up the target element and its score.
+        // 점수를 보고 요소를 결정
         var length = this.content.length,
             element = this.content[n],
             elemScore = this.scoreFunction(element);
 
         while(true) {
-            // Compute the indices of the child elements.
             var child2N = (n + 1) << 1,
                 child1N = child2N - 1;
-            // This is used to store the new position of the element, if any.
             var swap = null,
                 child1Score;
-            // If the first child exists (is inside the array)...
             if (child1N < length) {
-                // Look it up and compute its score.
                 var child1 = this.content[child1N];
                 child1Score = this.scoreFunction(child1);
 
-                // If the score is less than our element's, we need to swap.
+                // 더 작은 요소가 잇는 경우 Swap 하여 찾는다. 
                 if (child1Score < elemScore){
                     swap = child1N;
                 }
             }
 
-            // Do the same checks for the other child.
+            // 옆요소에세도 똑같은 적용을 한다.
             if (child2N < length) {
                 var child2 = this.content[child2N],
                     child2Score = this.scoreFunction(child2);
@@ -378,13 +346,13 @@ BinaryHeap.prototype = {
                 }
             }
 
-            // If the element needs to be moved, swap it, and continue.
+            // 요소의 Swap이 필요한 경우 Swap하도록 한다 
             if (swap !== null) {
                 this.content[n] = this.content[swap];
                 this.content[swap] = element;
                 n = swap;
             }
-            // Otherwise, we are done.
+            // 아닐 경우 작동한다
             else {
                 break;
             }

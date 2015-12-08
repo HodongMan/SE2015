@@ -1,4 +1,9 @@
-
+/*jslint browser : true, continue : true,
+	devel : true, indent : 2, maxerr : 50,
+	newcap: true, nomen : true, plusplus: true,
+	regexp : true, sloppy : true, vars = true,
+	while: true
+*/
 var SIM = {
 
 	current_top:0,
@@ -52,8 +57,17 @@ var SIM = {
 		this.current_left += 100;
 	},
 
-	moveToRotate : function(){
+	getPosition:function(){
+		var xPos = this.current_left - 278;
+		var yPos = this.current_top - 278;
 
+		xPos = Math.floor(xPos / 100);
+		yPos = Math.floor(yPos / 100);
+
+		return{
+			xPos:xPos,
+			yPos:yPos
+		};
 	},
 
 	
@@ -109,14 +123,14 @@ var ADD_ON = (function(SIM){
 	};
 
 	detectColorBlob = function(colorblob, Position){
-
+		
 		for(var i = 0; i < colorblob.length; i++){
 			if((parseInt(colorblob[0][0]) === Position.x) && (parseInt(colorblob[0][1]) === Position.y)){
 
 				var realX = 278 + Position.x * 100;
 				var realY = 278 + Position.y * 100;
 				var colorBlobHTML = '<div class = "colorBlobObject" style = "top:'+realY+'px; left:'+realX+'px;"></div>'; 
-				
+
 				$("body").append(colorBlobHTML);
 			}
 			else{
@@ -139,4 +153,5 @@ var ADD_ON = (function(SIM){
 		detectColorBlob:detectColorBlob,
 		compensateForImperfectMotion:compensateForImperfectMotion
 	};
+
 }(SIM));
